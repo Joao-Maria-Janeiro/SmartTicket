@@ -1,0 +1,78 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+void main() {
+  runApp(new MaterialApp(
+    home: new HomePage(),
+  ));
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  HomePageState createState() => new HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  List data;
+
+  Future<String> getData() async {
+    http.Response response = await http.get(
+        Uri.encodeFull("https://smartticket.herokuapp.com/services"),
+        headers: {
+          "Accept": "application/json",
+          "key": "RANDOM KEY"
+        }
+    );
+
+    // print(response.body);
+    data = json.decode(response.body);
+    print(data[1]["latest_retrived_ticket"]);
+    return "Success";
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: AppBar(
+        title: Text("SmarTicket"),
+        backgroundColor: Colors.amberAccent,
+      ),
+      body: ListView.builder(
+        itemCount: data == null ? 0 : data.length,
+        itemBuilder: (BuildContext context, int index){
+          return Container(
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Card(
+                    child: Container(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text(data[index]["name"]),
+
+                    ),
+                  ),
+                  Card(
+                    child: Container(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text(data[index]["current_ticket"]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      )
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.getData();
+  }
+}
