@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
-
+import './pages/services.dart';
 
 
 void main() => runApp(MyApp());
@@ -26,9 +26,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Timer timer;
   final String url = "https://smartticket.herokuapp.com/services";
   List data;
+  Set<String> clickedServices = new Set();
 
   Future<String> getData() async {
     var res = await http
@@ -37,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       var resBody = json.decode(res.body);
       data = resBody;
-      print(data);
     });
 
     return "Success!";
@@ -45,13 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    getData();
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => getData());
   }
 
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
   }
 
@@ -69,30 +67,28 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (BuildContext context, int index) {
           return new Container(
             child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Card(
-                    child: Container(
-                        padding: EdgeInsets.all(15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text("Name: "),
-                            Text(data[index]["name"],
-                                style: TextStyle(
-                                    fontSize: 18.0, color: Colors.black87)),
-                            Text("Current Ticket: "),
-                            Text((data[index]["current_ticket"]).toString(),
-                                style: TextStyle(
-                                    fontSize: 18.0, color: Colors.red)),
-                            Text("Latest Retrived Ticket: "),
-                            Text((data[index]["latest_retrived_ticket"]).toString(),
-                                style: TextStyle(
-                                    fontSize: 18.0, color: Colors.black87)),
-                          ],
-                        )),
-                  ),
-                ],
+              child: new InkWell(
+                onTap: () => clickedServices.add(data[index]["name"]),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Card(
+                      child: Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text("Name: "),
+                              Text(data[index]["name"],
+                                  style: TextStyle(
+                                      fontSize: 18.0, color: Colors.black87)),
+                            ],
+                          )),
+                    ),
+                    RaisedButton(
+                        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ServicePage(clickedServices: clickedServices))),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
