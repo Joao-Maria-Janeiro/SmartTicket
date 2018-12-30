@@ -5,27 +5,18 @@ import 'dart:convert';
 
 
 
-class Ticket {
-  int yourTicket;
-  String serviceName;
-  Ticket(String serviceName, int yourTicket){
-    this.yourTicket = yourTicket;
-    this.serviceName = serviceName;
-  }
-}
-
 class ServicePage extends StatefulWidget {
 
   final  Set<String> clickedServices;
+  final String url;
 
-  const ServicePage({Key key, this.clickedServices}) : super(key: key);
+  const ServicePage({Key key, this.clickedServices, this.url}) : super(key: key);
 
   @override
   State createState() => new ServicePageState();
 }
 
 class ServicePageState extends State<ServicePage> {
-  final String url = "https://smartticket.herokuapp.com/services";
   List data;
   List data2;
   List filtered = new List();
@@ -34,7 +25,7 @@ class ServicePageState extends State<ServicePage> {
 
   Future<String> getData() async {
     var res = await http
-        .get(Uri.encodeFull(url), headers: {"Accept": "application/json", "key": "RANDOM KEY"});
+        .get(Uri.encodeFull(widget.url), headers: {"Accept": "application/json", "key": "RANDOM KEY"});
 
     setState(() {
       var resBody = json.decode(res.body);
@@ -59,7 +50,7 @@ class ServicePageState extends State<ServicePage> {
     if (tickets == null){
       tickets = new List();
       for (var i = 0; i < filtered.length; i++){
-        String urlz = "https://smartticket.herokuapp.com/take/" + filtered[i]["name"];
+        String urlz = widget.url + "take/" + filtered[i]["name"];
         var res = await http.get(Uri.encodeFull(urlz), headers: {"Accept": "application/json", "key": "RANDOM KEY"});
         var resBody = json.decode(res.body);
         var yourTicketValue = resBody["ticket"];
