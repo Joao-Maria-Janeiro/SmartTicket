@@ -67,26 +67,38 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (BuildContext context, int index) {
           return new Container(
             child: Center(
+
               child: new InkWell(
                 onTap: () => clickedServices.add(data[index]["name"]),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Card(
-                      child: Container(
-                          padding: EdgeInsets.all(15.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Name: "),
-                              Text(data[index]["name"],
-                                  style: TextStyle(
-                                      fontSize: 18.0, color: Colors.black87)),
-                            ],
-                          )),
+                        child: Container(
+                            padding: EdgeInsets.all(20.0),
+                            child: Column(
+                              children: <Widget>[
+                                Text(data[index]["name"],
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            )),
                     ),
-                    RaisedButton(
+                    Container(
+                      //decoration: new BoxDecoration(color: Color(0xFF18D191), borderRadius: new BorderRadius.circular(12.0)),
+                      margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+                      height: 50.0,
+                      child: RaisedButton(
+                        color: Colors.lightGreen,
+                        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(12.0)),
+                        elevation: 6.0,
                         onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ServicePage(clickedServices: clickedServices))),
-                    ),
+                      ),
+                    )
+
                   ],
                 ),
               ),

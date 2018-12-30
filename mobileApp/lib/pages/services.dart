@@ -14,14 +14,36 @@ class ServicePage extends StatefulWidget {
 class ServicePageState extends State<ServicePage> {
   Set<String> clickedServices;
 
+
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Your selected Services"),
-      ),
-      body: new Text("${widget.clickedServices}"),
-    );
+    if(widget.clickedServices.isEmpty) {
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Your Selected Services"),
+        ),
+        body:
+            new Text("Please Choose a Service!",
+            style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Montserrat')),
+      );
+    }else {
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Your Selected Services"),
+        ),
+        body: new Text("${widget.clickedServices}",
+            style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Montserrat')),
+      );
+    }
   }
 
 }
