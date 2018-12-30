@@ -53,6 +53,19 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  Color getColor(String text) {
+    if (text == "Charcutaria") {
+      return Colors.orange;
+    } else if(text == "Talho") {
+      return Colors.red;
+    } else if(text == "Peixaria") {
+      return Colors.cyan;
+    } else if(text == "TakeAway") {
+      return Colors.amber;
+    }else {
+      return Colors.grey;
+    }
+  }
 
   @override
   @override
@@ -62,50 +75,63 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Smart Tickets"),
         backgroundColor: Colors.amberAccent,
       ),
-      body: ListView.builder(
-        itemCount: data == null ? 0 : data.length,
-        itemBuilder: (BuildContext context, int index) {
-          return new Container(
-            child: Center(
-
-              child: new InkWell(
-                onTap: () => clickedServices.add(data[index]["name"]),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Card(
-                        child: Container(
-                            padding: EdgeInsets.all(20.0),
-                            child: Column(
-                              children: <Widget>[
-                                Text(data[index]["name"],
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            )),
+      body: new Column(
+        children: <Widget>[
+          new Expanded(
+            child: ListView.builder(
+            itemCount: data == null ? 0 : data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return new Container(
+                child: Center(
+                  child: new InkWell(
+                    onTap: () => clickedServices.add(data[index]["name"]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Card(
+                          child: Container(
+                              decoration: new BoxDecoration(
+                                  color: getColor(data[index]["name"]),
+                                  borderRadius: new BorderRadius.only(
+                                      topLeft: const Radius.circular(12.0),
+                                      topRight: const Radius.circular(12.0),
+                                      bottomLeft: const Radius.circular(12.0),
+                                      bottomRight: const Radius.circular(12.0))),
+                              margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+                              padding: EdgeInsets.all(20.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(data[index]["name"],
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Montserrat')),
+                                ],
+                              )),
+                        )
+                      ],
                     ),
-                    Container(
-                      //decoration: new BoxDecoration(color: Color(0xFF18D191), borderRadius: new BorderRadius.circular(12.0)),
-                      margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
-                      height: 50.0,
-                      child: RaisedButton(
-                        color: Colors.lightGreen,
-                        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(12.0)),
-                        elevation: 6.0,
-                        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ServicePage(clickedServices: clickedServices))),
-                      ),
-                    )
-
-                  ],
+                  ),
                 ),
+              );
+            },
+          ),
+          ),
+            new Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+              height: 50.0,
+              child: RaisedButton(
+                color: Colors.lightGreen,
+                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
+                elevation: 6.0,
+                onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ServicePage(clickedServices: clickedServices))),
+                child: new Text("Check My Queue"),
               ),
-            ),
-          );
-        },
+            )
+        ],
       ),
     );
   }
 }
+
