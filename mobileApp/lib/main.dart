@@ -53,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  //For a dynamic color on the buttons
   Color getColor(String text) {
     if (text == "Charcutaria") {
       return Colors.orange;
@@ -71,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: new Color.fromRGBO(240, 240, 240, 4),
       appBar: AppBar(
         title: Text("Smart Tickets"),
         backgroundColor: Colors.amberAccent,
@@ -79,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           new Expanded(
             child: ListView.builder(
-            itemCount: data == null ? 0 : data.length,
+              itemCount: data == null ? 0 : data.length,
             itemBuilder: (BuildContext context, int index) {
               return new Container(
                 child: Center(
@@ -91,13 +93,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         Card(
                           child: Container(
                               decoration: new BoxDecoration(
-                                  color: getColor(data[index]["name"]),
+                                  color: Colors.white,
                                   borderRadius: new BorderRadius.only(
-                                      topLeft: const Radius.circular(12.0),
-                                      topRight: const Radius.circular(12.0),
-                                      bottomLeft: const Radius.circular(12.0),
-                                      bottomRight: const Radius.circular(12.0))),
-                              margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
+                                      topLeft: const Radius.circular(2.0),
+                                      topRight: const Radius.circular(2.0),
+                                      bottomLeft: const Radius.circular(2.0),
+                                      bottomRight: const Radius.circular(2.0))),
+                              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 1.0),
                               padding: EdgeInsets.all(20.0),
                               child: Column(
                                 children: <Widget>[
@@ -122,8 +124,8 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
               height: 50.0,
               child: RaisedButton(
-                color: Colors.lightGreen,
-                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
+                color: Colors.amberAccent,
+                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(4.0)),
                 elevation: 6.0,
                 onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ServicePage(clickedServices: clickedServices))),
                 child: new Text("Check My Queue"),
