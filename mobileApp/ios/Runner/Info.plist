@@ -14,6 +14,8 @@
 	<string>smart_ticket</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>NSCameraUsageDescription</key>
+    <string>Camera permission is required for barcode scanning.</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
