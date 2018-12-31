@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './pages/available_services.dart';
-
+import './pages/reader.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,10 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(url:"https://smartticket-lojadocidadao.herokuapp.com/"),
+      home: Scanner(),
     );
   }
 }
-
-
-

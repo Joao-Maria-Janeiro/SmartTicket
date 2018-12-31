@@ -25,8 +25,10 @@ class ServicePageState extends State<ServicePage> {
 
   Future<String> getData() async {
     var res = await http
-        .get(Uri.encodeFull(widget.url), headers: {"Accept": "application/json", "key": "RANDOM KEY"});
-
+        .get(Uri.encodeFull(widget.url + "services"), headers: {"Accept": "application/json", "key": "RANDOM KEY"});
+    print("HHEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+    print(widget.url);
+    print(widget.clickedServices);
     setState(() {
       var resBody = json.decode(res.body);
       data = resBody;
@@ -43,6 +45,7 @@ class ServicePageState extends State<ServicePage> {
         filtered.add(data[i]);
       }
     }
+    print("FFFFFFFFFFFFFFFFFFFFFFFFFFIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
     getTickets();
   }
 
@@ -51,6 +54,8 @@ class ServicePageState extends State<ServicePage> {
       tickets = new List();
       for (var i = 0; i < filtered.length; i++){
         String urlz = widget.url + "take/" + filtered[i]["name"];
+        print("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        print(urlz);
         var res = await http.get(Uri.encodeFull(urlz), headers: {"Accept": "application/json", "key": "RANDOM KEY"});
         var resBody = json.decode(res.body);
         var yourTicketValue = resBody["ticket"];
